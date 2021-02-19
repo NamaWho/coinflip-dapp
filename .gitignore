@@ -1,7 +1,6 @@
 .secret
 temp
 bin
-contracts/utils
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/solidity,soliditytruffle
