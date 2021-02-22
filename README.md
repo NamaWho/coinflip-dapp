@@ -3,6 +3,7 @@
 # CoinFlip Betting DApp
 
 CoinFlip DApp is a decentralized application where a player can bet on the result of a coin flip. In order to achieve almost 100% randomness in the coinflip, the project cooperates with an off-chain oracle, which sends back the result calling a callback function present inside the contract.
+If the player guess the result, he will get back his bet amount plus an additional same quantity, otherwise the funds will be kept by the contract. 
 Thanks to **Ivan On Tech Blockchain Academy** for the awesome course on https://academy.ivanontech.com/
 
 ## Setup 
