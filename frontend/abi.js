@@ -16,9 +16,27 @@ const abi = [
       },
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "choice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "bool",
-        "name": "result",
+        "name": "victory",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
     "name": "ClosedBet",
@@ -32,6 +50,12 @@ const abi = [
         "internalType": "string",
         "name": "description",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
       }
     ],
     "name": "LogNewProvableQuery",
@@ -61,14 +85,21 @@ const abi = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "bytes32",
-        "name": "betId",
-        "type": "bytes32"
-      },
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "WithdrownBalance",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": false,
         "internalType": "address",
-        "name": "sender",
+        "name": "player",
         "type": "address"
       },
       {
@@ -80,24 +111,11 @@ const abi = [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "choice",
+        "name": "contractBalance",
         "type": "uint256"
       }
     ],
-    "name": "PlacedBet",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "WithdrownBalance",
+    "name": "WithdrownFundsFromPlayer",
     "type": "event"
   },
   {
@@ -139,6 +157,11 @@ const abi = [
     ],
     "name": "betters",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "betAmount",
@@ -212,36 +235,6 @@ const abi = [
   },
   {
     "constant": false,
-    "inputs": [],
-    "name": "deposit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "withdrawAll",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
     "inputs": [
       {
         "internalType": "uint256",
@@ -253,32 +246,6 @@ const abi = [
     "outputs": [],
     "payable": true,
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "_id",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_result",
-        "type": "uint256"
-      }
-    ],
-    "name": "closeBet",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -306,17 +273,17 @@ const abi = [
     "inputs": [
       {
         "internalType": "bytes32",
-        "name": "queryId",
+        "name": "_queryId",
         "type": "bytes32"
       },
       {
         "internalType": "string",
-        "name": "result",
+        "name": "_result",
         "type": "string"
       },
       {
         "internalType": "bytes",
-        "name": "proof",
+        "name": "_proof",
         "type": "bytes"
       }
     ],
@@ -327,14 +294,35 @@ const abi = [
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "update",
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_player",
+        "type": "address"
+      }
+    ],
+    "name": "getPlayerBalance",
     "outputs": [
       {
-        "internalType": "bytes32",
+        "internalType": "uint256",
         "name": "",
-        "type": "bytes32"
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "deposit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": true,
@@ -344,14 +332,8 @@ const abi = [
   {
     "constant": false,
     "inputs": [],
-    "name": "dev_testRandomFunc",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
+    "name": "withdrawFunds",
+    "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
